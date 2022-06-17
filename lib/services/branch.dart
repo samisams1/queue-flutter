@@ -6,7 +6,7 @@ import 'package:queue/models/branch_response_model.dart';
 
 final String url = Config.apiURL + Config.allBranch;
 
-List<BranchResponseModel> parseUser(String responseBody) {
+List<BranchResponseModel> parseBranch(String responseBody) {
   var list = json.decode(responseBody) as List<dynamic>;
   var users = list.map((e) => BranchResponseModel.fromJson(e)).toList();
   return users;
@@ -14,9 +14,8 @@ List<BranchResponseModel> parseUser(String responseBody) {
 
 Future<List<BranchResponseModel>> fetchUsers() async {
   final http.Response response = await http.get(Uri.parse(url));
-
   if (response.statusCode == 200) {
-    return compute(parseUser, response.body);
+    return compute(parseBranch, response.body);
   } else {
     throw Exception(response.statusCode);
   }

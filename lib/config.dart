@@ -9,4 +9,5 @@ class Config {
   static const registerAPI = "auth/signup";
   static const userProfileAPI = "userProfile";
   static const allBranch = "allBranch";
+  static const serviceQueue = "serviceQueue";
 }

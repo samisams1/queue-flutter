@@ -41,12 +41,9 @@ class _HomePageState extends State<homePage> {
               .disableAutoConnect()
               .setQuery({'token': token})
               .build());
-      print("token");
-      print("sasaw kebede");
       String message = "mesage from Cient to connect";
       // Connect to websocket
       socket.connect();
-
       // Handle socket events
       socket.on('connect', (_) => print('connect: ${socket.id}'));
       socket.on('message', sendMessage(message));
