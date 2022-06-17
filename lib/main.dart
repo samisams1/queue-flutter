@@ -4,6 +4,7 @@ import 'package:queue/pages/eventPage.dart';
 import 'package:queue/pages/homePage.dart';
 import 'package:queue/pages/notificationPage.dart';
 import 'package:queue/pages/profilePage.dart';
+import 'package:queue/pages/ticketDetailPage.dart';
 import 'package:queue/routes/pageRoute.dart';
 import 'package:queue/pages/myTicketPage.dart';
 import 'package:queue/pages/register_page.dart';
@@ -17,7 +18,7 @@ void main() async {
   // Get result of the login function.
   bool _result = await SharedService.isLoggedIn();
   if (_result) {
-    _defaultHome = const homePage();
+    _defaultHome = HomePage();
   }
   runApp(const MyApp());
 }
@@ -37,14 +38,15 @@ class MyApp extends StatelessWidget {
         //  home: LoginPage(),
         routes: {
           '/': ((context) => _defaultHome),
-          pageRoutes.home: (context) => homePage(),
+          pageRoutes.home: (context) => HomePage(),
           pageRoutes.about: (context) => SchoolList(),
           pageRoutes.event: (context) => eventPage(),
           pageRoutes.profile: (context) => profilePage(),
           pageRoutes.notification: (context) => notificationPage(),
-          pageRoutes.myTicket: (context) => MyTicketPage(),
+          pageRoutes.myTicket: (context) => MyticketPage(),
           pageRoutes.register: (context) => RegisterPage(),
           pageRoutes.login: (context) => LoginPage(),
+          pageRoutes.login: (context) => TicketDetailPage(),
         });
   }
 }

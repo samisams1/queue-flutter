@@ -1,16 +1,19 @@
 class ticketRespose {
   int? id;
-  String? ticketNumber;
+  int? ticketNumber;
   String? status;
   String? windowNumber;
-  int? updatedBy;
+  String? updatedBy;
+  int? serviceId;
 
-  ticketRespose(
-      {required this.id,
-      required this.ticketNumber,
-      required this.status,
-      required this.windowNumber,
-      required this.updatedBy});
+  ticketRespose({
+    required this.id,
+    required this.ticketNumber,
+    required this.status,
+    required this.windowNumber,
+    required this.updatedBy,
+    required this.serviceId,
+  });
 
   ticketRespose.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -18,6 +21,7 @@ class ticketRespose {
     status = json['status'];
     windowNumber = json['windowNumber'];
     updatedBy = json['updatedBy'];
+    serviceId = json['serviceId'];
   }
 
   Map<String, dynamic> toJson() {
@@ -27,6 +31,7 @@ class ticketRespose {
     data['status'] = this.status;
     data['windowNumber'] = this.windowNumber;
     data['updatedBy'] = this.updatedBy;
+    data['serviceId'] = this.serviceId;
     return data;
   }
 }

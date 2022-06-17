@@ -3,20 +3,22 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:queue/config.dart';
 import 'package:queue/models/ticketResponse.dart';
+import 'package:queue/pages/homePage.dart';
+import 'package:queue/pages/servicePage.dart';
+import 'package:queue/pages/ticketDetailPage.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import '../navigationDrawer/navigationDrawer.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
-import 'package:snippet_coder_utils/FormHelper.dart';
 import 'package:snippet_coder_utils/ProgressHUD.dart';
 import 'package:queue/services/shared_service.dart';
 
-class MyTicketPage extends StatefulWidget {
-  const MyTicketPage({Key? key}) : super(key: key);
-  @override
-  _MyTicketPageState createState() => _MyTicketPageState();
+class MyticketPage extends StatefulWidget {
+  MyticketPage({Key? key}) : super(key: key);
+
+  _MyticketPageState createState() => _MyticketPageState();
 }
 
-class _MyTicketPageState extends State<MyTicketPage> {
+class _MyticketPageState extends State<MyticketPage> {
   static const String routeName = '/myTicketPage';
   static final GlobalKey<FormState> globalFormKey1 = GlobalKey<FormState>();
   bool isApiCallProcess = false;
@@ -24,6 +26,9 @@ class _MyTicketPageState extends State<MyTicketPage> {
   var ticket = [];
   var customerBeforYou = '';
   var windowNumber = '';
+  var totalTicket = 0;
+  final primary = Color.fromARGB(255, 91, 94, 173);
+  final secondary = Color(0xfff29a94);
   late IO.Socket socket;
   @override
   void initState() {
@@ -63,18 +68,215 @@ class _MyTicketPageState extends State<MyTicketPage> {
     }
   }
 
+  @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-        backgroundColor: HexColor("1e1616"),
+    return SafeArea(
+      child: Scaffold(
+          backgroundColor: HexColor("#0358ad"),
+          body: ProgressHUD(
+            child: Form(
+              //   key: globalFormKeyBranch,
+              child: totalTicket > 0 ? _MyTicketUI(context) : _EmptyUI(context),
+            ),
+            inAsyncCall: isApiCallProcess,
+            opacity: 0.3,
+            key: UniqueKey(),
+          )),
+    );
+  }
+
+  @override
+  Widget _MyTicketUI(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Color(0xfff0f0f0),
+      appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 91, 94, 173),
+        toolbarHeight: 80,
+        title: Text("My Ticket"),
+        centerTitle: true,
+        actions: [
+          IconButton(
+            icon: const Icon(
+              Icons.logout,
+              color: Color.fromARGB(255, 255, 254, 254),
+            ),
+            onPressed: () {
+              SharedService.logout(context);
+            },
+          ),
+          const SizedBox(
+            width: 10,
+          ),
+        ],
+      ),
+      drawer: navigationDrawer(),
+      body: SingleChildScrollView(
+        child: Container(
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          child: Stack(
+            children: <Widget>[
+              Container(
+                padding: EdgeInsets.only(top: 5),
+                height: MediaQuery.of(context).size.height,
+                width: double.infinity,
+                child: ListView.builder(
+                    itemCount: totalTicket,
+                    itemBuilder: (BuildContext context, int index) {
+                      return buildList(context, index);
+                    }),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget buildList(BuildContext context, int index) {
+    return new GestureDetector(
+        //onTap: (() => print("sasaw")),
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => TicketDetailPage(),
+            ),
+          );
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(25),
+            color: Colors.white,
+          ),
+          width: 70,
+          height: 70,
+          margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+          child: Row(
+            children: <Widget>[
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      "TicketNo",
+                      style: TextStyle(
+                          color: primary,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12),
+                    ),
+                    SizedBox(
+                      height: 6,
+                    ),
+                    Text(
+                      '${ticket[index]["ticketNumber"]}',
+                      style: TextStyle(
+                          color: primary,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18),
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      "before you",
+                      style: TextStyle(
+                          color: primary,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12),
+                    ),
+                    SizedBox(
+                      height: 6,
+                    ),
+                    Text(
+                      customerBeforYou.toString(),
+                      style: TextStyle(
+                          color: primary,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18),
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      "status",
+                      style: TextStyle(
+                          color: primary,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12),
+                    ),
+                    SizedBox(
+                      height: 6,
+                    ),
+                    Text(
+                      '${ticket[index]["status"]}',
+                      style: TextStyle(
+                          color: primary,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18),
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      "window",
+                      style: TextStyle(
+                          color: primary,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14),
+                    ),
+                    SizedBox(
+                      height: 6,
+                    ),
+                    '${ticket[index]["status"]}' == "unCalled"
+                        ? Text(
+                            '${ticket[index]["windowNumber"]}',
+                            style: TextStyle(
+                                color: Color.fromRGBO(243, 159, 2, 1),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18),
+                          )
+                        : Text(
+                            '${ticket[index]["windowNumber"]}',
+                            style: TextStyle(
+                                color: Color.fromARGB(255, 30, 243, 2),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18),
+                          ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ));
+  }
+
+  @override
+  Widget _EmptyUI(BuildContext context) {
+    return Scaffold(
         appBar: AppBar(
-          backgroundColor: HexColor("00060c"),
+          backgroundColor: Color.fromARGB(255, 91, 94, 173),
           toolbarHeight: 80,
           title: Text("My Ticket"),
+          centerTitle: true,
           actions: [
             IconButton(
               icon: const Icon(
                 Icons.logout,
-                color: Color.fromARGB(255, 228, 10, 10),
+                color: Color.fromARGB(255, 255, 254, 254),
               ),
               onPressed: () {
                 SharedService.logout(context);
@@ -86,242 +288,67 @@ class _MyTicketPageState extends State<MyTicketPage> {
           ],
         ),
         drawer: navigationDrawer(),
-        body: ProgressHUD(
-          child: Form(
-            key: globalFormKey1,
-            child: _ticketUI(context),
-          ),
-          inAsyncCall: isApiCallProcess,
-          opacity: 0.3,
-          key: UniqueKey(),
-        ));
-  }
-
-  @override
-  Widget _ticketUI(BuildContext context) => MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        backgroundColor: Color(0xff696b9e),
-        body: ListView.builder(
-            itemCount: ticket.length,
-            itemBuilder: (BuildContext context, int index) {
-              return SingleChildScrollView(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    const Padding(
-                      padding: EdgeInsets.only(left: 20, bottom: 30, top: 50),
-                      child: Text(
-                        "My Ticket",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 25,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 0),
-                      child: Center(
-                          child: Text(
-                        "Queue Before You  : " + customerBeforYou.toString(),
-                        style: TextStyle(
-                            color: Color.fromARGB(255, 252, 250, 250),
-                            fontSize: 30.0,
-                            fontWeight: FontWeight.bold),
-                      )),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 20.0),
-                      child: Center(
-                          child: Text(
-                        "Ticket number :" +
-                            "A0" +
-                            '${ticket[index]["ticketNumber"]}',
-                        style: TextStyle(
-                            color: Color.fromARGB(255, 252, 250, 250),
-                            fontSize: 30.0,
-                            fontWeight: FontWeight.bold),
-                      )),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 20.0),
-                      child: Center(
-                          child: Text(
-                        "Status  :" + '${ticket[index]["status"]}',
-                        style: TextStyle(
-                            color: Color.fromARGB(255, 252, 250, 250),
-                            fontSize: 30.0,
-                            fontWeight: FontWeight.bold),
-                      )),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 20.0),
-                      child: Center(
-                          child: Text(
-                        "Window Number :" + '${ticket[index]["windowNumber"]}',
-                        style: TextStyle(
-                            color: Color.fromARGB(255, 252, 250, 250),
-                            fontSize: 30.0,
-                            fontWeight: FontWeight.bold),
-                      )),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 20.0),
-                      child: Center(
-                          child: Text(
-                        "Called Time :" + '${ticket[index]["updatedAt"]}',
-                        style: TextStyle(
-                            color: Color.fromARGB(255, 252, 250, 250),
-                            fontSize: 30.0,
-                            fontWeight: FontWeight.bold),
-                      )),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                  ],
+        backgroundColor: Color(0xfff0f0f0),
+        body: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              const Padding(
+                padding: EdgeInsets.only(left: 20, bottom: 30, top: 50),
+                child: Text(
+                  "My Ticket",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 25,
+                    color: Color.fromARGB(255, 52, 73, 175),
+                  ),
                 ),
-              );
-            }),
-      ));
-
-  @override
-  Widget _ticketUI1(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height / 8,
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  Color.fromARGB(255, 228, 7, 7),
-                  Color.fromARGB(255, 27, 2, 2),
-                ],
               ),
-              borderRadius: BorderRadius.only(
-                //topLeft: Radius.circular(100),
-                //topRight: Radius.circular(150),
-                bottomRight: Radius.circular(100),
-                bottomLeft: Radius.circular(100),
-              ),
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(top: 20),
-                  child: Center(
+              Padding(
+                padding: const EdgeInsets.only(top: 20.0),
+                child: Center(
                     child: Text(
-                      "Queue App",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 40,
-                        color: HexColor("#283B71"),
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-
-                /*  Align(
-                  alignment: Alignment.center,
-                  child: Image.asset(
-                    "assets/images/ShoppingAppLogo.png",
-                    fit: BoxFit.contain,
-                    width: 250,
-                  ),
-                ),*/
-              ],
-            ),
-          ),
-          const Padding(
-            padding: EdgeInsets.only(left: 20, bottom: 30, top: 50),
-            child: Text(
-              "My Ticket",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 25,
-                color: Colors.white,
+                  'Empty Please Get ticket',
+                  style: TextStyle(
+                      color: primary,
+                      fontSize: 25.0,
+                      fontWeight: FontWeight.bold),
+                )),
               ),
-            ),
+              Align(
+                  //  padding: EdgeInsets.only(left: Center, bottom: 30, top: 50),
+                  child: RaisedButton(
+                onPressed: () {
+                  //wrong way: use context in same level tree with MaterialApp
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => HomePage()));
+                },
+                child: const Text('Go To Ticket '),
+                color: primary,
+                textColor: Colors.white,
+              )),
+              const SizedBox(
+                height: 20,
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+            ],
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 0),
-            child: Center(
-                child: Text(
-              "Queue Before You  : " + customerBeforYou.toString(),
-              style: TextStyle(
-                  color: Color.fromARGB(255, 12, 0, 0),
-                  fontSize: 30.0,
-                  fontWeight: FontWeight.bold),
-            )),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 20.0),
-            child: Center(
-                child: Text(
-              ticket != null ? ticket.toString() : "samisams",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 30.0,
-                  fontWeight: FontWeight.bold),
-            )),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-        ],
-      ),
-    );
-  }
-
-  sendMessage(String message) {
-    socket.emit(
-      "message",
-      {
-        "id": socket.id,
-        "message": message, //--> message to be sent
-        "username": "samisams",
-        "sentAt": DateTime.now().toLocal().toString().substring(0, 16),
-      },
-    );
+        ));
   }
 
   void myTicketListener() {
     socket.on('my_ticket', (data) {
-      print(data);
       // var ticket = data;
       if (this.mounted) {
         setState(() {
           ticket = data;
+          totalTicket = data.length;
         });
       }
     });

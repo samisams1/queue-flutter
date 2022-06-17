@@ -10,4 +10,5 @@ class Config {
   static const userProfileAPI = "userProfile";
   static const allBranch = "allBranch";
   static const serviceQueue = "serviceQueue";
+  static const myTicket = "myTicket";
 }
