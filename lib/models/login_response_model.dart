@@ -4,17 +4,17 @@ LoginResponseModel loginResponseJson(String str) =>
     LoginResponseModel.fromJson(json.decode(str));
 
 class LoginResponseModel {
-  LoginResponseModel({
-    required this.id,
-    required this.username,
-    required this.email,
-    required this.roles,
-    required this.status,
-    required this.accessToken,
-    required this.windowNumber,
-    required this.firstName,
-    required this.lastName,
-  });
+  LoginResponseModel(
+      {required this.id,
+      required this.username,
+      required this.email,
+      required this.roles,
+      required this.status,
+      required this.accessToken,
+      required this.windowNumber,
+      required this.firstName,
+      required this.lastName,
+      required this.cereatedAt});
   late final int id;
   late final String username;
   late final String email;
@@ -24,6 +24,7 @@ class LoginResponseModel {
   late final String windowNumber;
   late final String firstName;
   late final String lastName;
+  late final DateTime cereatedAt;
 
   LoginResponseModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -35,6 +36,7 @@ class LoginResponseModel {
     windowNumber = json['windowNumber'];
     firstName = json['firstName'];
     lastName = json['lastName'];
+    cereatedAt = json['cereatedAt'];
   }
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
@@ -47,6 +49,8 @@ class LoginResponseModel {
     _data['windowNumber'] = windowNumber;
     _data['firstName'] = firstName;
     _data['lastName'] = lastName;
+    _data['cereatedAt'] = cereatedAt;
+
     return _data;
   }
 }

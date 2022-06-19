@@ -71,21 +71,12 @@ class _TicketDetailPageState extends State<TicketDetailPage> {
           backgroundColor: Color.fromARGB(255, 91, 94, 173),
           toolbarHeight: 80,
           title: Text("Ticket"),
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back,
+                color: Color.fromARGB(255, 253, 251, 251)),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
           centerTitle: true,
-          actions: [
-            IconButton(
-              icon: const Icon(
-                Icons.logout,
-                color: Color.fromARGB(255, 255, 254, 254),
-              ),
-              onPressed: () {
-                SharedService.logout(context);
-              },
-            ),
-            const SizedBox(
-              width: 10,
-            ),
-          ],
         ),
         drawer: navigationDrawer(),
         body: ProgressHUD(
@@ -112,17 +103,6 @@ class _TicketDetailPageState extends State<TicketDetailPage> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    const Padding(
-                      padding: EdgeInsets.only(left: 20, bottom: 30, top: 50),
-                      child: Text(
-                        "My Ticket",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 25,
-                          color: Color.fromARGB(255, 91, 94, 173),
-                        ),
-                      ),
-                    ),
                     Padding(
                       padding: const EdgeInsets.only(top: 20.0),
                       child: Center(
@@ -130,7 +110,7 @@ class _TicketDetailPageState extends State<TicketDetailPage> {
                         "--------------------------------",
                         style: TextStyle(
                             color: primary,
-                            fontSize: 20.0,
+                            fontSize: 18.0,
                             fontWeight: FontWeight.bold),
                       )),
                     ),
@@ -142,7 +122,8 @@ class _TicketDetailPageState extends State<TicketDetailPage> {
                         style: TextStyle(
                             color: Color.fromARGB(255, 245, 141, 4),
                             fontSize: 30.0,
-                            fontWeight: FontWeight.bold),
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Open Sans'),
                       )),
                     ),
                     Padding(
@@ -202,6 +183,7 @@ class _TicketDetailPageState extends State<TicketDetailPage> {
                         style: TextStyle(
                             color: primary,
                             fontSize: 30.0,
+                            fontFamily: 'Open Sans',
                             fontWeight: FontWeight.bold),
                       )),
                     ),

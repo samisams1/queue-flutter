@@ -79,20 +79,6 @@ class _ServicePageState extends State<ServicePage> {
               onPressed: () => Navigator.of(context).pop(),
             ),
             centerTitle: true,
-            actions: [
-              IconButton(
-                icon: const Icon(
-                  Icons.logout,
-                  color: Color.fromARGB(255, 255, 254, 254),
-                ),
-                onPressed: () {
-                  //  SharedService.logout(context);
-                },
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-            ],
           ),
           drawer: navigationDrawer(),
           body: ProgressHUD(

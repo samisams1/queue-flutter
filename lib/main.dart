@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:queue/pages/aboutPage.dart';
 import 'package:queue/pages/eventPage.dart';
 import 'package:queue/pages/homePage.dart';
+import 'package:queue/pages/logout.dart';
 import 'package:queue/pages/notificationPage.dart';
 import 'package:queue/pages/profilePage.dart';
+import 'package:queue/pages/settingPage.dart';
 import 'package:queue/pages/ticketDetailPage.dart';
 import 'package:queue/routes/pageRoute.dart';
 import 'package:queue/pages/myTicketPage.dart';
@@ -39,14 +41,13 @@ class MyApp extends StatelessWidget {
         routes: {
           '/': ((context) => _defaultHome),
           pageRoutes.home: (context) => HomePage(),
-          pageRoutes.about: (context) => SchoolList(),
           pageRoutes.event: (context) => eventPage(),
           pageRoutes.profile: (context) => profilePage(),
           pageRoutes.notification: (context) => notificationPage(),
           pageRoutes.myTicket: (context) => MyticketPage(),
           pageRoutes.register: (context) => RegisterPage(),
           pageRoutes.login: (context) => LoginPage(),
-          pageRoutes.login: (context) => TicketDetailPage(),
+          pageRoutes.setting: (context) => SettingPage(),
         });
   }
 }

@@ -1,3 +1,6 @@
+/**
+ * Author: samisams
+  */
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:queue/models/login_request_model.dart';
@@ -22,11 +25,12 @@ class _LoginPageState extends State<LoginPage> {
   String? userName;
   String? password;
   String? email;
+  final primary = Color.fromARGB(255, 91, 94, 173);
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-          backgroundColor: HexColor("#0358ad"),
+          backgroundColor: Color.fromARGB(255, 245, 245, 247),
           body: ProgressHUD(
             child: Form(
               key: globalFormKeyLogin,
@@ -53,8 +57,8 @@ class _LoginPageState extends State<LoginPage> {
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: [
-                  Colors.white,
-                  Colors.white,
+                  Color.fromARGB(255, 91, 94, 173),
+                  Color.fromARGB(255, 91, 94, 173),
                 ],
               ),
               borderRadius: BorderRadius.only(
@@ -75,7 +79,7 @@ class _LoginPageState extends State<LoginPage> {
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 40,
-                        color: HexColor("#283B71"),
+                        color: Color.fromARGB(255, 247, 247, 248),
                       ),
                     ),
                   ),
@@ -98,7 +102,7 @@ class _LoginPageState extends State<LoginPage> {
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 25,
-                color: Colors.white,
+                color: Color.fromARGB(255, 91, 94, 173),
               ),
             ),
           ),
@@ -120,11 +124,11 @@ class _LoginPageState extends State<LoginPage> {
               },
               initialValue: "",
               obscureText: false,
-              borderFocusColor: Colors.white,
-              prefixIconColor: Colors.white,
-              borderColor: Colors.white,
-              textColor: Colors.white,
-              hintColor: Colors.white.withOpacity(0.7),
+              borderFocusColor: primary,
+              prefixIconColor: primary,
+              borderColor: primary,
+              textColor: primary,
+              hintColor: primary,
               borderRadius: 10,
             ),
           ),
@@ -147,11 +151,11 @@ class _LoginPageState extends State<LoginPage> {
               },
               initialValue: "",
               obscureText: hidePassword,
-              borderFocusColor: Colors.white,
-              prefixIconColor: Colors.white,
-              borderColor: Colors.white,
-              textColor: Colors.white,
-              hintColor: Colors.white.withOpacity(0.7),
+              borderFocusColor: primary,
+              prefixIconColor: primary,
+              borderColor: primary,
+              textColor: primary,
+              hintColor: primary,
               borderRadius: 10,
               suffixIcon: IconButton(
                 onPressed: () {
@@ -159,7 +163,7 @@ class _LoginPageState extends State<LoginPage> {
                     hidePassword = !hidePassword;
                   });
                 },
-                color: Colors.white.withOpacity(0.7),
+                color: primary,
                 icon: Icon(
                   hidePassword ? Icons.visibility_off : Icons.visibility,
                 ),
@@ -174,12 +178,13 @@ class _LoginPageState extends State<LoginPage> {
               ),
               child: RichText(
                 text: TextSpan(
-                  style: const TextStyle(color: Colors.grey, fontSize: 14.0),
+                  style: const TextStyle(
+                      color: Color.fromARGB(255, 91, 94, 173), fontSize: 14.0),
                   children: <TextSpan>[
                     TextSpan(
                       text: 'Forget Password ?',
                       style: const TextStyle(
-                        color: Colors.white,
+                        color: Color.fromARGB(255, 91, 94, 173),
                         decoration: TextDecoration.underline,
                       ),
                       recognizer: TapGestureRecognizer()
@@ -239,9 +244,9 @@ class _LoginPageState extends State<LoginPage> {
                   );
                 }
               },
-              btnColor: HexColor("0a0000"),
-              borderColor: Colors.white,
-              txtColor: Colors.white,
+              btnColor: primary,
+              borderColor: primary,
+              txtColor: Color.fromARGB(255, 249, 249, 250),
               borderRadius: 10,
             ),
           ),
@@ -254,7 +259,7 @@ class _LoginPageState extends State<LoginPage> {
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 18,
-                color: Colors.white,
+                color: Color.fromARGB(255, 91, 94, 173),
               ),
             ),
           ),
@@ -269,7 +274,8 @@ class _LoginPageState extends State<LoginPage> {
               ),
               child: RichText(
                 text: TextSpan(
-                  style: const TextStyle(color: Colors.white, fontSize: 14.0),
+                  style: const TextStyle(
+                      color: Color.fromARGB(255, 91, 94, 173), fontSize: 14.0),
                   children: <TextSpan>[
                     const TextSpan(
                       text: 'Dont have an account? ',
@@ -277,7 +283,7 @@ class _LoginPageState extends State<LoginPage> {
                     TextSpan(
                       text: 'Sign up',
                       style: const TextStyle(
-                        color: Colors.white,
+                        color: Color.fromARGB(255, 91, 94, 173),
                         fontWeight: FontWeight.bold,
                       ),
                       recognizer: TapGestureRecognizer()

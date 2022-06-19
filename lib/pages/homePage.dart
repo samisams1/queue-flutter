@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:queue/config.dart';
 import 'package:queue/models/branch_response_model.dart';
 import 'package:queue/navigationDrawer/navigationDrawer.dart';
+import 'package:queue/pages/myTicketPage.dart';
 import 'package:queue/pages/servicePage.dart';
 import 'package:queue/services/branch.dart';
 import 'package:queue/services/shared_service.dart';
@@ -233,20 +234,6 @@ class _HomePageState extends State<HomePage> {
           toolbarHeight: 80,
           title: Text("Get Ticket"),
           centerTitle: true,
-          actions: [
-            IconButton(
-              icon: const Icon(
-                Icons.logout,
-                color: Color.fromARGB(255, 255, 254, 254),
-              ),
-              onPressed: () {
-                SharedService.logout(context);
-              },
-            ),
-            const SizedBox(
-              width: 10,
-            ),
-          ],
         ),
         drawer: navigationDrawer(),
         backgroundColor: Color(0xfff0f0f0),
@@ -310,36 +297,23 @@ class _HomePageState extends State<HomePage> {
                       ),
                     )
                   : Align(
+                      //  padding: EdgeInsets.only(left: Center, bottom: 30, top: 50),
                       alignment: Alignment.center,
                       child: Padding(
                         padding: const EdgeInsets.only(
                           right: 25,
                         ),
-                        child: RichText(
-                          text: TextSpan(
-                            style: const TextStyle(
-                                color: Color.fromARGB(255, 25, 42, 88),
-                                fontSize: 17.0),
-                            children: <TextSpan>[
-                              const TextSpan(
-                                text: 'You Have Already Active Ticket ',
-                              ),
-                              TextSpan(
-                                text: 'view',
-                                style: const TextStyle(
-                                  color: Color.fromARGB(255, 91, 130, 245),
-                                  fontWeight: FontWeight.bold,
-                                ),
-                                recognizer: TapGestureRecognizer()
-                                  ..onTap = () {
-                                    Navigator.pushNamed(
-                                      context,
-                                      '/myTicket',
-                                    );
-                                  },
-                              ),
-                            ],
-                          ),
+                        child: RaisedButton(
+                          onPressed: () {
+                            //wrong way: use context in same level tree with MaterialApp
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => MyticketPage()));
+                          },
+                          child: const Text('Go To Ticket '),
+                          color: primary,
+                          textColor: Colors.white,
                         ),
                       ),
                     ),

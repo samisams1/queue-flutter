@@ -1,3 +1,6 @@
+/**
+ * Author: samisams
+  */
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
@@ -94,20 +97,6 @@ class _MyticketPageState extends State<MyticketPage> {
         toolbarHeight: 80,
         title: Text("My Ticket"),
         centerTitle: true,
-        actions: [
-          IconButton(
-            icon: const Icon(
-              Icons.logout,
-              color: Color.fromARGB(255, 255, 254, 254),
-            ),
-            onPressed: () {
-              SharedService.logout(context);
-            },
-          ),
-          const SizedBox(
-            width: 10,
-          ),
-        ],
       ),
       drawer: navigationDrawer(),
       body: SingleChildScrollView(

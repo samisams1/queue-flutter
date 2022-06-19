@@ -255,7 +255,6 @@ class _RegisterPageState extends State<RegisterPage> {
                   setState(() {
                     isApiCallProcess = true;
                   });
-
                   RegisterRequestModel model = RegisterRequestModel(
                     firstName: firstName,
                     lastName: lastName,

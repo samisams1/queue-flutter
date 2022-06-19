@@ -1,6 +1,7 @@
-import 'package:flutter/cupertino.dart';
+/**
+ * Author samisams
+ * */
 import 'package:flutter/material.dart';
-import 'package:snippet_coder_utils/hex_color.dart';
 
 Widget createDrawerBodyItem(
     {required IconData icon,
@@ -9,13 +10,16 @@ Widget createDrawerBodyItem(
   return ListTile(
     title: Row(
       children: <Widget>[
-        Icon(icon),
+        Icon(
+          icon,
+          color: Color.fromARGB(255, 91, 94, 173),
+        ),
         Padding(
-          padding: EdgeInsets.only(left: 8.0),
+          padding: EdgeInsets.only(left: 0.0),
           child: Text(text,
               style: TextStyle(
-                  color: HexColor("080000"),
-                  fontSize: 20.0,
+                  color: Color.fromARGB(255, 91, 94, 173),
+                  fontSize: 16.0,
                   fontWeight: FontWeight.w700)),
         )
       ],
